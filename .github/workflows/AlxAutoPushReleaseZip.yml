@@ -10,9 +10,11 @@ jobs:
     steps:
       - name: delete existing zip
         if: ${{ hashFiles( github.event.repository.name ) != '' }}
+        shell: powershell
         run: rm ${{github.event.repository.name}}.zip
       - name: create folder zip
         if: ${{ hashFiles( github.event.repository.name ) == '' }}
+        shell: powershell
         run: |
           cd ${{ github.workspace }}
-          zip -r ${{ github.event.repository.name }}.zip ${{ github.event.repository.name }} -x ".git/*" ".github/*" ".gitignore" "README.md"
+          Compress-Archive -Path ${{ github.workspace }}\\${{ github.event.repository.name }} -Destination ${{ github.workspace }}\\${{ github.event.repository.name }}.zip
