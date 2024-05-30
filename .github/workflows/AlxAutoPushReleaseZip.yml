@@ -17,4 +17,4 @@ jobs:
         shell: powershell
         run: |
           cd ${{ github.workspace }}
-          Compress-Archive -Path ${{ github.workspace }}\\${{ github.event.repository.name }} -Destination ${{ github.workspace }}\\${{ github.event.repository.name }}.zip
+          Compress-Archive -Path ${{ github.workspace }}\${{ github.event.repository.name }} -Destination ${{ github.workspace }}\${{ github.event.repository.name }}.zip
