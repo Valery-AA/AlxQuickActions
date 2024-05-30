@@ -6,10 +6,8 @@ on :
 
 jobs:
   zip-user-folder-to-release:
-    runs-on: github
+    runs-on: windows-latest
     steps:
       - name: Build with logs
         if: ${{ hashFiles( github.event.repository.name ) != '' }}
         run: echo "zip file already present"
-        
-
