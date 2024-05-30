@@ -1,5 +1,5 @@
 name: AlxAutoPushReleaseZip
-on : 
+on:
   push:
     branches:
       - main
@@ -8,6 +8,11 @@ jobs:
   zip-user-folder-to-release:
     runs-on: windows-latest
     steps:
-      - name: Build with logs
+      - name: delete existing zip
         if: ${{ hashFiles( github.event.repository.name ) != '' }}
-        run: echo "zip file already present"
+        run: rm ${{github.event.repository.name}}.zip
+      - name: create folder zip
+        if: ${{ hashFiles( github.event.repository.name ) == '' }}
+        run: |
+          cd ${{ github.workspace }}
+          zip -r ${{ github.event.repository.name }}.zip ${{ github.event.repository.name }} -x ".git/*" ".github/*" ".gitignore" "README.md"
