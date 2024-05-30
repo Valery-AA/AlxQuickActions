@@ -5,7 +5,7 @@ on:
       - main
 
 env:
-  ALX_SUBFOLDER_PATH: ${{ github.event.repository.name }}\${{ github.event.repository.name }}
+  ALX_SUBFOLDER_PATH: .\\${{ github.event.repository.name }}\\${{ github.event.repository.name }}
 
 jobs:
   zip-user-folder-to-release:
@@ -21,4 +21,4 @@ jobs:
         if: ${{ ( hashFiles( github.event.repository.name ) == '' ) && ( hashFiles( env.ALX_SUBFOLDER_PATH ) != '' ) }}
         shell: powershell
         run: |
-          Compress-Archive -Path ${{env.ALX_SUBFOLDER_PATH}} -Destination ${{ github.event.repository.name }}.zip
+          Compress-Archive -Path ${{env.ALX_SUBFOLDER_PATH}} -Destination .\${{ github.event.repository.name }}.zip
