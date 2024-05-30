@@ -7,18 +7,18 @@ on:
 env:
   ALX_SUBFOLDER_PATH: .\\${{ github.event.repository.name }}\\${{ github.event.repository.name }}
 
+    
 jobs:
   zip-user-folder-to-release:
     runs-on: windows-latest
     steps:
-      
-      - name: delete existing zip
-        if: ${{ hashFiles( github.event.repository.name ) != '' }}
-        shell: powershell
-        run: rm ${{github.event.repository.name}}.zip
-
-      - name: create folder zip
-        if: ${{ ( hashFiles( github.event.repository.name ) == '' ) && ( hashFiles( env.ALX_SUBFOLDER_PATH ) != '' ) }}
+      - name: zipping_powershell_script
         shell: powershell
         run: |
-          Compress-Archive -Path ${{env.ALX_SUBFOLDER_PATH}} -Destination .\${{ github.event.repository.name }}.zip
+          $parent_directory = Split-Path -Path (Get-Location) -Leaf -Resolve
+          $target_subfolder = Split-Path -Path ".\$parent_directory" -Leaf -Resolve
+
+          if ( Test-Path .\$target_subfolder)
+          {
+              Compress-Archive -Force -Path .\$target_subfolder -Destination .\$target_subfolder.zip
+          } 
