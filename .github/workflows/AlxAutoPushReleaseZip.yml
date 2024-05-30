@@ -1,0 +1,15 @@
+name: AlxAutoPushReleaseZip
+on : 
+  push:
+    branches:
+      - main
+
+jobs:
+  zip-user-folder-to-release:
+    runs-on: github
+    steps:
+      - name: Build with logs
+        if: ${{ hashFiles( github.event.repository.name ) != '' }}
+        run: echo "zip file already present"
+        
+
