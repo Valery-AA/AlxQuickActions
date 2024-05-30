@@ -4,16 +4,21 @@ on:
     branches:
       - main
 
+env:
+  ALX_SUBFOLDER_PATH: ${{ github.event.repository.name }}\${{ github.event.repository.name }}
+
 jobs:
   zip-user-folder-to-release:
     runs-on: windows-latest
     steps:
+      
       - name: delete existing zip
         if: ${{ hashFiles( github.event.repository.name ) != '' }}
         shell: powershell
         run: rm ${{github.event.repository.name}}.zip
+
       - name: create folder zip
-        if: ${{ hashFiles( github.event.repository.name ) == '' }}
+        if: ${{ ( hashFiles( github.event.repository.name ) == '' ) && ( hashFiles( env.ALX_SUBFOLDER_PATH ) != '' ) }}
         shell: powershell
         run: |
-          Compress-Archive -Path ${{ github.event.repository.name }}\${{ github.event.repository.name }} -Destination ${{ github.event.repository.name }}.zip
+          Compress-Archive -Path ${{env.ALX_SUBFOLDER_PATH}} -Destination ${{ github.event.repository.name }}.zip
